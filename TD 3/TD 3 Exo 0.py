@@ -1,3 +1,7 @@
-print("---Calcul du carré d'un nombre---")
-a = int(input("Tapez un nombre pour obtenir son carré\n"))
-print(f"Le carré de {a} est : {a*a}")
+print("Echange des valeurs de deux variables")
+A=int(input("Entrez la valeur de la variable A\n"))
+B=int(input("Entrez la valeur de la variable B\n"))
+C=B
+B=A
+A=C
+print(f"La valeur de A est {A}, et la valeur de B est {B}.")
