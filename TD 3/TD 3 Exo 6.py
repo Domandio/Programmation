@@ -1,8 +1,15 @@
-x=float(input("Veuillez entrer un nombre entre 10 et 20 :\n"))
-while x<10 or x>20 :
-    if x<10 :
-        x=float(input(f"Le nombre {x} est inférieur à 10, veuillez entre un nombre plus grand :\n"))
-    else :
-        if x>20 :
-            x=float(input(f"Le nombre {x} est supérieur à 20, veuillez entrer un nombre plus petit :\n"))
-print(f"Félicitations, le nombre {x} est bien compris entre 10 et 20 !")
+print("Factorielle additive")
+x = float(input(f"Entrez votre nombre\n"))
+y = 0
+i = 0
+print("---------")
+while i<=x :
+    y = y+i
+    i = i+1
+    if i<x :
+        print(f"{i}\n+")
+    else : 
+        if i==x :
+            print(f"{i}")
+print("---------")
+print(f"La valeur finale de votre factorielle additive est : {y}")
