@@ -4,4 +4,6 @@ Nb2 = float(input("Second nombre :\n"))
 if Nb1>0 and Nb2>0 :
     print("Le résultat est positif")
 else :
-    if Nb1<0 and Nb2<
+    if Nb1<0 and Nb2<0 :
+        print("Le résultat est positif")
+    else : print("Le résultat est négatif")
