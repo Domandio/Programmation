@@ -1,5 +1,9 @@
 print("Calculateur de niveau en parachutisme")
+
+#Saisie utilisateur (nombre entier)
 x = int(input("Entrez l'âge "))
+
+#Tests par tranches inférieures
 if x<6 :
     print("Trop jeune !")
 else :
@@ -15,5 +19,5 @@ else :
                 if x<99 :
                     print("Niveau Cadet")
                 else : 
-                    print("Vous n'êtes pas un peu trop vieux pour faire ce sport ?")
+                    print("Vous n'êtes pas un peu trop âgé pour faire des sports extrêmes ?")
                 
