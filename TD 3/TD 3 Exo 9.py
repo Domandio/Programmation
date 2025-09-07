@@ -14,14 +14,14 @@ tab = []
 for i in range(nbnotes):
     note = float(input(f"Saisissez la note n°{i+1}\n"))
     tab.append(note)
-    somme = somme + tab[i]
+    somme += tab[i]
 
 #Calcul moyenne
 moy = somme / nbnotes
 
 for i in range(nbnotes):
     if tab[i] > moy :
-        notesup = notesup + 1
+        notesup += 1
 
 #Affichage final
 print("----------")
