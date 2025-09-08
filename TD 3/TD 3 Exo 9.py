@@ -9,26 +9,31 @@ somme = 0
 moy = 0
 notesup = 0
 i = 0
-tab = []
+tab = [0] * nbnotes
 
-
-#Boucle For : Saisie des notes dans la liste
+#Boucle test + saisie tableau
 for i in range(nbnotes):
-    note = float(input(f"Saisissez la note n°{i+1}\n"))
-    while note < notation :
-    if note > notation :
-        note = float(input(f"Saisissez une note comprise entre 0 et {notation} !\n"))
-    else : 
-        tab.append(note)
-        somme += tab[i]
+    while True:
+        try:
+            note = float(input(f"Saisissez la note n°{i+1} :\n"))
+            if 0 <= note <= notation:
+                break
+            else:
+                print(f"Erreur : entrez une note comprise entre 0 et {notation}.")
+        except ValueError:
+            print("Erreur : saisissez un nombre valide.")
+    tab[i] = note
+    somme += note
 
 #Calcul moyenne
 moy = somme / nbnotes
+i = 0
 
 for i in range(nbnotes):
     if tab[i] > moy :
         notesup += 1
 
 #Affichage final
+print(f"{tab}")
 print("----------")
 print(f"Le nombre de notes supérieures à la moyenne de la classe est : {notesup}")
