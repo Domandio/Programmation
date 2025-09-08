@@ -16,7 +16,7 @@ tab = []
 for i in range(nbnotes):
     note = float(input(f"Saisissez la note n°{i+1}\n"))
     while note < notation :
-    if note > notation : 
+    if note > notation :
         note = float(input(f"Saisissez une note comprise entre 0 et {notation} !\n"))
     else : 
         tab.append(note)
