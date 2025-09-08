@@ -1,5 +1,6 @@
 #Saisie utilisateur
 nbnotes = int(input("Entrez le nombre de notes que vous voulez saisir :\n"))
+notation = int(input("Entrez la note maximale possible :\n"))
 print("----------")
 
 #Variables
@@ -10,11 +11,16 @@ notesup = 0
 i = 0
 tab = []
 
+
 #Boucle For : Saisie des notes dans la liste
 for i in range(nbnotes):
     note = float(input(f"Saisissez la note n°{i+1}\n"))
-    tab.append(note)
-    somme += tab[i]
+    while note < notation :
+    if note > notation : 
+        note = float(input(f"Saisissez une note comprise entre 0 et {notation} !\n"))
+    else : 
+        tab.append(note)
+        somme += tab[i]
 
 #Calcul moyenne
 moy = somme / nbnotes
