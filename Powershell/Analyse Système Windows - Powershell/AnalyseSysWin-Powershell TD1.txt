@@ -1,0 +1,85 @@
+#Version de powershell
+$PSVersionTable
+
+#Historique des commandes
+Get-History
+
+#Mettre à jour l'aide
+Update-Help
+Update-Help -Module ???
+
+#Sauvegarder l'aide en local et joindre le dépôt (Possibilité de fixer le dépôt par GPO)
+Save-Help
+Update-Help -sourcepath "???"
+
+#Demander de l'aide
+Get-Help -detailed
+Get-Help -Full
+Get-Help -Examples
+
+
+#Créer item de type dossier
+New-Item dossier-test -ItemType "Directory"
+ 
+#Créer item de type fichier et le remplir avec du texte
+New-Item -Name "fichier test.txt" -ItemType "File" -value "Bonjour"
+New-Item -Path "c:\TD_Powershell\exemple.txt" -ItemType "file" -value "J'adore le Powershell"
+
+ #Créer un fichier et forcer la création de tous ses dossiers parents
+New-Item "c:\td_powershell\docs\docs1\docs2\fichier.txt" -force
+
+#get-children Mode :
+l (lien)
+d (répertoire)
+a (archive)
+r (en lecture seule)
+h (caché)
+s (système)
+
+
+#Afficher les items en lecture seule uniquement :
+Get-ChildItem -readonly
+
+#Afficher les dossiers qui ne sont pas en lecture seule :
+Get-ChildItem -Attributes Directory+!readonly
+
+#Copier un item
+Copy-Item "c:\td_powershell\docs2" "c:\td_powershell\docs\docs1\test"
+#Copier un item et le renommer
+Copy-Item "c:\td_powershell\docs2.txt" "c:\td_powershell\docs\docs1\test.txt"
+
+#Déplacer un item
+Move-Item "c:\td_powershell\docs\docs1\docs2" "c:\td_powershell"
+
+#Supprimer un item
+Remove-Item "c:\td_powershell\docs\docs1\test.txt"
+Remove-Item "c:\td_powershell\docs\" -Recurse
+
+#Les fournisseurs
+Get-PSProvider
+Get-ChildItem env;
+help wsman
+
+#Combiner les cmdlets
+Get-ChildItem  C:\td_powershell\* -include *.txt | remove-item -WhatIf
+
+#Affichage tableau (fl / ft / fw / fc)
+Get-Service | Where-Object Status -eq running | fl
+Get-Service | Where-Object Status -eq running | Measure-Object
+
+#Afficher les résultats dans un fichier (> = écrase ; >> ajoute)
+Get-Service | Where-Object Status -eq running | Where-Object CanStop -eq true | Out-File c:\services.txt
+
+#Gestion des utilisateurs
+Get-Command -Module Microsoft.PowerShell.LocalAccounts
+
+#Gestion des profils
+$profile | Format-list * -Force
+
+#Stratégie de sécurité
+Set-ExecutionPolicy
+Get-ExecutionPolicy
+#Stratégies possibles :
+-Restricted / AllSigned / RemoteSigned / Unrestricted / Bypass / Undefined
+#Etendues :
+-Process / CurrentUser / LocalMachine
