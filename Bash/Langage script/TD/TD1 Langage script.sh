@@ -35,4 +35,38 @@ then echo "Le répertoire contenant le plus de références est : $1"
 else echo "Le répertoire contenant le plus de références est : $2"
 fi
 
-test
+#Exercice 7 ------
+#On récupère l'argument avec $1 et on utilise une boucle for pour afficher tous les chiffres
+for ((i=1; i<=$1; i++)); do
+echo $i
+done
+
+#Exercice 8 ------
+#Récupérer le chemin réel du répertoire home de l'utilisateur courant
+a=$(eval echo ~$USER)
+
+#read -t : timeout de la saisie utilisateur en secondes
+echo 'Vous avez 5 secondes pour entrer le chemin de votre répertoire home !'
+read -t 5 chemin
+error=$?
+
+#Vu sur "read --help" : si read timeout, renvoie un code d'erreur supérieur à 128
+if [ $error -gt 128 ]; then
+echo "Trop tard ! Le chemin de votre répertoire home est $a !"
+
+#Test pour vérifier la saisie de l'utilisateur
+elif [ "$a" != "$chemin" ]; then
+echo "Faux ! Le chemin de votre répertoire home est $a !"
+elif [ "$a" == "$chemin" ]; then 
+echo "Bien joué ! Le chemin de votre répertoire home est bien $a !"
+
+fi
+
+#Exercice 9 ------
+
+
+
+#Exercice 10 ------
+#Stocker le nombre d'arguments et afficher le nième argument
+nb=$#
+echo ${!nb}
