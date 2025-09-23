@@ -34,3 +34,5 @@ if [ $a -gt $b ]
 then echo "Le répertoire contenant le plus de références est : $1"
 else echo "Le répertoire contenant le plus de références est : $2"
 fi
+
+test
