@@ -74,7 +74,7 @@ rep1=$(echo "$cpath" | cut -d '/' -f$i)
 #Reconstruire le chemin petit a petit a chaque itération pour pouvoir utiliser "ls"
 rep2="$rep2"/"$rep1"
 echo "Le répertoire $rep2 contient les éléments suivants :"
-ls $rep2
+ls "$rep2"
 echo -----
 done
 
