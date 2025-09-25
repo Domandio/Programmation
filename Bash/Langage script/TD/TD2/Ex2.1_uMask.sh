@@ -120,4 +120,4 @@ umask "${ownr}${grpr}${othr}"
 
 echo "Vérification de l'uMask après modification, pour le shell actuel :"
 umask
-echo "Pour le rendre permanent, retirez le # devant la ligne 115 de ce script et relancez le."
+echo "Pour le rendre permanent, retirez le # devant la ligne 119 de ce script et relancez le."
