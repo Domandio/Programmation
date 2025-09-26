@@ -115,7 +115,7 @@ othr=$((7-$otherexec-$otherread-$otherwrite))
 #Modification de l'uMask pour le shell actuel (temporaire)
 umask "${ownr}${grpr}${othr}"
 
-#-----Ligne à modifier pour rendre l'uMask permanent :
+#-----Ligne ci-dessous à modifier pour rendre l'uMask permanent :
 #echo "umask ${ownr}${grpr}${othr}" >> ~/.bashrc
 
 echo "Vérification de l'uMask après modification, pour le shell actuel :"
