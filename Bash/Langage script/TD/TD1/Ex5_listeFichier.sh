@@ -1,5 +1,7 @@
 #!/bin/bash
+nbfichier=$(ls -l $1 | cut -c 1 | grep -i -c "-")
+rep=($(ls "$1"))
 
-#Lister les fichiers en appelant le premier paramètre
-ls $1
-ls -l $1 | cut -c 10 | grep -i -c "t"
+for ((i=1; i<=nbfichier; i++)); do
+    ls | sed -n "${i}p"
+done
