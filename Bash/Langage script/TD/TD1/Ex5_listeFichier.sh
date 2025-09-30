@@ -1,7 +1,9 @@
 #!/bin/bash
 nbfichier=$(ls -l $1 | cut -c 1 | grep -i -c "-")
-rep=($(ls "$1"))
+echo $nbfichier
 
-for ((i=1; i<=nbfichier; i++)); do
-    ls | sed -n "${i}p"
+for fichier in "$1"/*; do
+    if [ -f "$fichier" ]; then
+        echo "$fichier"
+    fi
 done
