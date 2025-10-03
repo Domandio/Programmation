@@ -1,6 +1,13 @@
-#!/bin/bash
+#TD 2 Langage scripts - Matthieu LANDUZE
+#Adminsys 2025-2026
 
-#Exercice 1  ------
+#  _____ ___    _  _   _   ___ 
+# |_   _|   \  | \| | /.\ |_  )
+#   | | | |) | | .` | \_/  / / 
+#   |_| |___/  |_|\_|     /___|
+                              
+
+#---------- Exercice 1  ------
 
 #IFS='.' : on remplace le séparateur de base, l'espace, par un point. Chaque octet séparé par un point saisi par l'utilisateur sera donc bien enregistré dans une variable séparée.
 echo "Entrez une adresse IP au format '255.255.255.255'"
@@ -23,16 +30,16 @@ if [ "$test" != "false" ]; then
     ping -c 4 "$oct1.$oct2.$oct3.$oct4"
 fi
 
-#Exercice 2 - 1ère partie  ------
+#---------- Exercice 2 - 1ère partie  ------
 
 #On récupère le 10ème caractère de chaque ligne avec cut, puis on filtre et compte le nombre d'occurences de "t" ou "T"
 ls -l $1 | cut -c 10 | grep -i -c "t"
 
-#Exercice 2 - 2ème partie  ------
+#---------- Exercice 2 - 2ème partie  ------
 
 #Read, vérifiction et stockage des valeurs pour chaque droit de chaque type d'utilisateur :
 
-#-----PROPRIETAIRE
+#PROPRIETAIRE
 echo "Quelles permissions souhaitez vous appliquer aux nouveaux fichiers et répertoires ? Pour vous :"
 read -p "lecture o/n : " ownerread
 case "$ownerread" in
@@ -67,7 +74,7 @@ case "$ownerexec" in
     exit 1 ;;
     esac
 
- #-----GROUPE
+ #GROUPE
 echo "Quelles permissions souhaitez vous appliquer aux nouveaux fichiers et répertoires ? Pour le groupe :"
 read -p "lecture o/n : " groupread
 case "$groupread" in
@@ -102,7 +109,7 @@ case "$groupexec" in
     exit 1 ;;
     esac
 
-#-----AUTRES
+#AUTRES
 echo "Quelles permissions souhaitez vous appliquer aux nouveaux fichiers et répertoires ? Pour les autres utilisateurs :"
 read -p "lecture o/n : " otherread
 case "$otherread" in
@@ -145,14 +152,14 @@ othr=$((7-$otherexec-$otherread-$otherwrite))
 #Modification de l'uMask pour le shell actuel (temporaire)
 umask "${ownr}${grpr}${othr}"
 
-#-----Ligne ci-dessous à modifier pour rendre l'uMask permanent :
+#-----Ligne ci-dessous à modifier pour rendre l'uMask permanent :-----
 #echo "umask ${ownr}${grpr}${othr}" >> ~/.bashrc
 
 echo "Vérification de l'uMask après modification, pour le shell actuel :"
 umask
 echo "Pour le rendre permanent, retirez le # devant la ligne 119 de ce script et relancez le."
 
-#Exercice 3  ------
+#---------- Exercice 3  ------
 
 #On récupère le nombre total de fichiers puis on filtre ceux commençant par d ou -
 nbtotal=$(ls $1 | wc -l)
@@ -184,7 +191,7 @@ echo -----------
 echo "Vérification des droits :"
 ls -l
 
-#Exercice 4  ------
+#---------- Exercice 4  ------
 
 #Copie de passwd dans le répertoire courant de l'utilisateur
 cp /etc/passwd ~/passwd.txt
@@ -193,7 +200,7 @@ chmod 666 ~/passwd.txt
 #Tri par ordre alphabétique décroissant
 sort -r ~/passwd.txt
 
-#Exercice 5  ------
+#---------- Exercice 5  ------
 
 #On vérifie si $1 est un fichier ou un dossier dans des boucles if :
 if [ -f "$1" ]; then
@@ -204,7 +211,7 @@ else
 echo "Erreur : veuillez entrer un argument valide (fichier ou répertoire)"
 fi
 
-#Exercice 6  ------
+#---------- Exercice 6  ------
 
 #Initalisation de variables avec les arguments entrés :
 rep1="$1"
@@ -224,7 +231,7 @@ for fichier1 in "$rep1"/*; do
 done
 echo "Les deux répertoires contiennent $i éléments portant le même nom."
 
-#Exercice 7  ------
+#---------- Exercice 7  ------
 
 echo "Entrez le login de l'utilisateur :"
 read login
@@ -238,12 +245,215 @@ fi
 echo "Groupes secondaires de $login :"
 id -Gn "$login" | cut -d' ' -f2-
 
-#Exercice 8  ------
+#---------- Exercice 8  ------
 
+#On vérifie le nombre de groupes dont le GID est inférieur à 1000 (systèmes) et ceux dont le GID est supérieur à 1000 (utilisateurs)
+nbsys=$(cut -d':' -f3 /etc/group | grep -E '^[0-9]+$' | awk '$1 < 1000' | wc -l)
+nbuser=$(cut -d':' -f3 /etc/group | grep -E '^[0-9]+$' | awk '$1 >= 1000' | wc -l)
 
+echo "Nombre de groupes système : $nbsys"
+echo "Nombre de groupes utilisateur : $nbuser"
 
-#Exercice 9  ------
+#Parcourir tous les groupes du fichier /etc/group
+while IFS=':' read nomgroupe motdepasse gid membres; do
+    #Vérifier que le GID est un nombre valide
+        #Tester si le GID est inférieur à 1000
+        if [ $gid -lt 1000 ]; then
+            echo "Le groupe $nomgroupe est un groupe système"
+        else
+            echo "Le groupe $nomgroupe est un groupe utilisateur"
+        fi
 
+done < /etc/group
 
+#---------- Exercice 9  ------
 
-#Exercice 10 ------
+#Récupération du nom d'utilisateur en paramètre + menu d'actions
+username="$1"
+
+echo "Gestion de l'utilisateur $username"
+echo "1 - Créer l'utilisateur"
+echo "2 - Modifier l'utilisateur"
+echo "3 - Supprimer l'utilisateur"
+read -p "Votre choix : " choix
+
+case "$choix" in
+1)
+
+#Lecture des informations au clavier
+read -p "UID : " uid
+read -p "GID : " gid
+read -p "Shell : " shell
+read -p "Groupes secondaires (séparés par des virgules) : " groupes
+read -p "Répertoire personnel : " homedir
+    
+#Création de l'utilisateur avec les paramètres fournis
+useradd -u "$uid" -g "$gid" -s "$shell" -G "$groupes" -d "$homedir" -m "$username"
+
+;;
+    
+2)
+
+#Lecture des nouvelles informations
+read -p "Nouvel UID : " uid
+read -p "Nouveau GID : " gid
+read -p "Nouveau Shell : " shell
+read -p "Nouveaux groupes secondaires : " groupes
+read -p "Nouveau répertoire personnel : " homedir
+    
+#Modification de l'UID
+usermod -u "$uid" "$username"
+    
+#Modification du GID
+usermod -g "$gid" "$username"
+
+#Modification du Shell
+usermod -s "$shell" "$username"
+
+#Modification des groupes secondaires
+usermod -G "$groupes" "$username"
+    
+#Modification du répertoire personnel
+usermod -d "$homedir" -m "$username"
+
+echo "L'utilisateur $username a été modifié"
+id "$username"
+;;
+    
+3)
+#Confirmation de suppression
+read -p "Voulez-vous supprimer le répertoire personnel ? (o/n) : " supphome
+    
+case "$supphome" in
+    o)
+    userdel -r "$username"
+    ;;
+    n)
+    userdel "$username"
+    ;;
+    *)
+    echo "Choix invalide, annulation"
+    exit 1
+    ;;
+esac
+
+    echo "L'utilisateur $username a été supprimé"
+    ;;
+    
+    *)
+    echo "Choix invalide : entrez 1, 2 ou 3"
+    exit 1
+    ;;
+esac
+
+#---------- Exercice 10 ------
+
+#-----QUESTION 1 :
+echo "Fichiers contenant 'bash' dans le répertoire personnel"
+find ~ -name "*bash*"
+echo -----
+
+#-----QUESTION 2
+echo "Fichiers modifiés il y a 30 minutes"
+find ~ -mmin -30
+echo -----
+
+#-----QUESTION 3
+echo "Fichiers de plus de 2 Mo dans /usr"
+find /usr -type f -size +2M 2>/dev/null
+echo -----
+
+#-----QUESTION 4
+echo "Répertoires dans /usr/share/bug"
+find /usr/share/bug -type d -ls 2>/dev/null
+echo -----
+
+#-----QUESTION 5
+echo "Fichiers > 100 Ko appartenant à root dans /etc"
+find /etc -type f -size +100k -user root 2>/dev/null
+echo -----
+
+#-----QUESTION 6
+echo "Répertoires modifiés il y a 10 jours et < 100 Ko dans /etc"
+find /etc -type d -mtime 10 -size -100k 2>/dev/null
+echo -----
+
+#Création du fichier adresses
+echo "192.168.1.245.www.test.com.80" > adresses
+echo "192.168.1.17.www.test.net.8012" >> adresses
+echo "192.168.2.5.www.test.org.8001" >> adresses
+echo "192.168.3.1.www.test.ma.8098" >> adresses
+echo "192.168.2.15.www.test.to.8080" >> adresses
+
+echo -----
+
+#-----QUESTION 7
+echo "Tri par adresse IP"
+#"-t." permet de délimiter des champs séparés par des points. Ensuite tri par champ :"-k1,1" = champ de 1 à 1. "n" pour un tri numérique
+sort -t. -k1,1n -k2,2n -k3,3n -k4,4n adresses
+echo -----
+
+#-----QUESTION 8
+echo "Tri par nom de domaine"
+sort -t. -k6,6 adresses
+echo -----
+
+#-----QUESTION 9
+echo "Tri par adresse IP et numéro de port (ordre inverse)"
+sort -t. -k1,1n -k2,2n -k3,3n -k4,4n -k7,7nr adresses
+echo -----
+
+#-----QUESTION 10
+echo "Création du fichier trié"
+sort -t. -k1,1n -k2,2n -k3,3n -k4,4n -k6,6 -k7,7n adresses > adresses_triees
+echo "Fichier adresses_triees créé"
+cat adresses_triees
+echo -----
+
+#-----QUESTION 11
+echo "Filtrage type et nom, tri par type"
+ls -l /etc | cut -c 1,59- | sort -k1,1 > filtre_ls
+echo "Résultat dans filtre_ls :"
+cat filtre_ls
+echo -----
+
+#-----QUESTION 12
+echo "Filtrage droits, utilisateur, groupe, nom - tri par droits et utilisateur"
+ls -l /etc | grep '^-' | cut -c 1-10,17-24,26-32,59- | sort -k1,1 -k2,2 >> filtre_ls
+echo "Résultat ajouté dans filtre_ls"
+echo -----
+
+#---------- Exercice 11 ------
+
+#Fonction 1 : Copie du fichier /etc/passwd vers /mypasswd
+copier_passwd() {
+    cp /etc/passwd /mypasswd
+    echo "Le fichier /etc/passwd a été copié vers /mypasswd"
+}
+
+#Fonction 2 : Retourne le nombre de lignes du fichier mypasswd
+compter_lignes() {
+    nblignes=$(wc -l < /mypasswd)
+    echo "$nblignes"
+}
+
+#Fonction 3 : Retourne la taille du fichier mypasswd en ko
+taille_fichier() {
+    #On récupère la taille en octets puis on convertit en ko
+    taille=$(ls -l /mypasswd | cut -d' ' -f5)
+    tailleko=$((taille / 1024))
+    echo "$tailleko"
+}
+
+#-----SCRIPT PRINCIPAL-----
+
+#Appel de la fonction de copie
+copier_passwd
+
+#Appel de la fonction de comptage et stockage du résultat
+nblignes=$(compter_lignes)
+echo "Le fichier /mypasswd contient $nblignes lignes"
+
+#Appel de la fonction de calcul de taille et stockage du résultat
+taille=$(taille_fichier)
+echo "La taille du fichier /mypasswd est de $taille ko"

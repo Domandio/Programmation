@@ -1,10 +1,18 @@
+#!/bin/bash
 
-# -----TD1-----
-#Exercice 1 ------
+#TD 1 Langage scripts - Matthieu LANDUZE
+#Adminsys 2025-2026
+
+#  _____ ___    _  _   _   _ 
+# |_   _|   \  | \| | /.\ / |
+#   | | | |) | | .` | \_/ | |
+#   |_| |___/  |_|\_|     |_|
+                            
+#---------- Exercice 1 ------
 
 date "+%H:%M:%S %D"
 
-#Exercice 2 ------
+#---------- Exercice 2 ------
 
 #Créer des variables pour enregistrer les groupes les uns après les autres
 g1=$(groups | cut -d ' ' -f1)
@@ -14,23 +22,23 @@ g3=$(groups | cut -d ' ' -f3)
 #Afficher les groupes ainsi que le formatage
 echo "$g1;$g2;$g3."
 
-#Exercice 3 ------
+#---------- Exercice 3 ------
 
 #printf permet de sortir une liste des arguments, puis sort permet de les trier
 liste_triee=$(printf '%s\n' "$@" | sort)
 #Afficher la variable pour obtenir les arguments par odre alphabétique
 echo $liste_triee
 
-#Exercice 4 ------
+#---------- Exercice 4 ------
 
 echo "J'ai été appelé avec $# arguments"
 
-#Exercice 5 ------
+#---------- Exercice 5 ------
 
 #Lister les fichiers en appelant le premier paramètre
 ls $1
 
-#Exercice 6 ------
+#---------- Exercice 6 ------
 
 #Compter le nombre de fichiers de chaque répertoire en redirigeant la sortie de ls dans wc
 a=$(ls $1 | wc -l)
@@ -41,14 +49,14 @@ then echo "Le répertoire contenant le plus de références est : $1"
 else echo "Le répertoire contenant le plus de références est : $2"
 fi
 
-#Exercice 7 ------
+#---------- Exercice 7 ------
 
 #On récupère l'argument avec $1 et on utilise une boucle for pour afficher tous les chiffres
 for ((i=1; i<=$1; i++)); do
 echo $i
 done
 
-#Exercice 8 ------
+#---------- Exercice 8 ------
 
 #Récupérer le chemin réel du répertoire home de l'utilisateur courant
 a=$(eval echo ~$USER)
@@ -70,7 +78,7 @@ elif [ "$a" == "$chemin" ]; then
 echo "Bien joué ! Le chemin de votre répertoire home est bien $a !"
 fi
 
-#Exercice 9 ------
+#---------- Exercice 9 ------
 
 #!/bin/bash
 #Récupérer le nombre de "/" dans le répertoire courant
@@ -89,15 +97,23 @@ ls "$rep2"
 echo -----
 done
 
-#Exercice 10 ------
+#---------- Exercice 10 ------
 
 #Stocker le nombre d'arguments et afficher le nième argument
 nb=$#
 echo ${!nb}
 
-# -----TD2-----
 
-#Exercice 1  ------
+#TD 2 Langage scripts - Matthieu LANDUZE
+#Adminsys 2025-2026
+
+#  _____ ___    _  _   _   ___ 
+# |_   _|   \  | \| | /.\ |_  )
+#   | | | |) | | .` | \_/  / / 
+#   |_| |___/  |_|\_|     /___|
+                              
+
+#---------- Exercice 1  ------
 
 #IFS='.' : on remplace le séparateur de base, l'espace, par un point. Chaque octet séparé par un point saisi par l'utilisateur sera donc bien enregistré dans une variable séparée.
 echo "Entrez une adresse IP au format '255.255.255.255'"
@@ -120,16 +136,16 @@ if [ "$test" != "false" ]; then
     ping -c 4 "$oct1.$oct2.$oct3.$oct4"
 fi
 
-#Exercice 2 - 1ère partie  ------
+#---------- Exercice 2 - 1ère partie  ------
 
 #On récupère le 10ème caractère de chaque ligne avec cut, puis on filtre et compte le nombre d'occurences de "t" ou "T"
 ls -l $1 | cut -c 10 | grep -i -c "t"
 
-#Exercice 2 - 2ème partie  ------
+#---------- Exercice 2 - 2ème partie  ------
 
 #Read, vérifiction et stockage des valeurs pour chaque droit de chaque type d'utilisateur :
 
-#-----PROPRIETAIRE
+#PROPRIETAIRE
 echo "Quelles permissions souhaitez vous appliquer aux nouveaux fichiers et répertoires ? Pour vous :"
 read -p "lecture o/n : " ownerread
 case "$ownerread" in
@@ -164,7 +180,7 @@ case "$ownerexec" in
     exit 1 ;;
     esac
 
- #-----GROUPE
+ #GROUPE
 echo "Quelles permissions souhaitez vous appliquer aux nouveaux fichiers et répertoires ? Pour le groupe :"
 read -p "lecture o/n : " groupread
 case "$groupread" in
@@ -199,7 +215,7 @@ case "$groupexec" in
     exit 1 ;;
     esac
 
-#-----AUTRES
+#AUTRES
 echo "Quelles permissions souhaitez vous appliquer aux nouveaux fichiers et répertoires ? Pour les autres utilisateurs :"
 read -p "lecture o/n : " otherread
 case "$otherread" in
@@ -242,14 +258,14 @@ othr=$((7-$otherexec-$otherread-$otherwrite))
 #Modification de l'uMask pour le shell actuel (temporaire)
 umask "${ownr}${grpr}${othr}"
 
-#-----Ligne ci-dessous à modifier pour rendre l'uMask permanent :
+#-----Ligne ci-dessous à modifier pour rendre l'uMask permanent :-----
 #echo "umask ${ownr}${grpr}${othr}" >> ~/.bashrc
 
 echo "Vérification de l'uMask après modification, pour le shell actuel :"
 umask
 echo "Pour le rendre permanent, retirez le # devant la ligne 119 de ce script et relancez le."
 
-#Exercice 3  ------
+#---------- Exercice 3  ------
 
 #On récupère le nombre total de fichiers puis on filtre ceux commençant par d ou -
 nbtotal=$(ls $1 | wc -l)
@@ -281,7 +297,7 @@ echo -----------
 echo "Vérification des droits :"
 ls -l
 
-#Exercice 4  ------
+#---------- Exercice 4  ------
 
 #Copie de passwd dans le répertoire courant de l'utilisateur
 cp /etc/passwd ~/passwd.txt
@@ -290,7 +306,7 @@ chmod 666 ~/passwd.txt
 #Tri par ordre alphabétique décroissant
 sort -r ~/passwd.txt
 
-#Exercice 5  ------
+#---------- Exercice 5  ------
 
 #On vérifie si $1 est un fichier ou un dossier dans des boucles if :
 if [ -f "$1" ]; then
@@ -301,7 +317,7 @@ else
 echo "Erreur : veuillez entrer un argument valide (fichier ou répertoire)"
 fi
 
-#Exercice 6  ------
+#---------- Exercice 6  ------
 
 #Initalisation de variables avec les arguments entrés :
 rep1="$1"
@@ -321,7 +337,7 @@ for fichier1 in "$rep1"/*; do
 done
 echo "Les deux répertoires contiennent $i éléments portant le même nom."
 
-#Exercice 7  ------
+#---------- Exercice 7  ------
 
 echo "Entrez le login de l'utilisateur :"
 read login
@@ -335,7 +351,7 @@ fi
 echo "Groupes secondaires de $login :"
 id -Gn "$login" | cut -d' ' -f2-
 
-#Exercice 8  ------
+#---------- Exercice 8  ------
 
 #On vérifie le nombre de groupes dont le GID est inférieur à 1000 (systèmes) et ceux dont le GID est supérieur à 1000 (utilisateurs)
 nbsys=$(cut -d':' -f3 /etc/group | grep -E '^[0-9]+$' | awk '$1 < 1000' | wc -l)
@@ -356,7 +372,7 @@ while IFS=':' read nomgroupe motdepasse gid membres; do
 
 done < /etc/group
 
-#Exercice 9  ------
+#---------- Exercice 9  ------
 
 #Récupération du nom d'utilisateur en paramètre + menu d'actions
 username="$1"
@@ -368,105 +384,66 @@ echo "3 - Supprimer l'utilisateur"
 read -p "Votre choix : " choix
 
 case "$choix" in
-    1)
-    #Vérifier si l'utilisateur existe déjà
-    id "$username" 2>/dev/null
-    if [ $? -eq 0 ]; then
-        echo "Erreur : l'utilisateur $username existe déjà"
-        exit 1
-    fi
+1)
+
+#Lecture des informations au clavier
+read -p "UID : " uid
+read -p "GID : " gid
+read -p "Shell : " shell
+read -p "Groupes secondaires (séparés par des virgules) : " groupes
+read -p "Répertoire personnel : " homedir
     
-    #Lecture des informations au clavier
-    read -p "UID : " uid
-    read -p "GID : " gid
-    read -p "Shell : " shell
-    read -p "Groupes secondaires (séparés par des virgules) : " groupes
-    read -p "Répertoire personnel : " homedir
+#Création de l'utilisateur avec les paramètres fournis
+useradd -u "$uid" -g "$gid" -s "$shell" -G "$groupes" -d "$homedir" -m "$username"
+
+;;
     
-    #Création de l'utilisateur avec les paramètres fournis
-    useradd -u "$uid" -g "$gid" -s "$shell" -G "$groupes" -d "$homedir" -m "$username"
+2)
+
+#Lecture des nouvelles informations
+read -p "Nouvel UID : " uid
+read -p "Nouveau GID : " gid
+read -p "Nouveau Shell : " shell
+read -p "Nouveaux groupes secondaires : " groupes
+read -p "Nouveau répertoire personnel : " homedir
     
-    if [ $? -eq 0 ]; then
-        echo "L'utilisateur $username a été créé avec succès"
-        id "$username"
-    else
-        echo "Erreur lors de la création de l'utilisateur"
-    fi
+#Modification de l'UID
+usermod -u "$uid" "$username"
+    
+#Modification du GID
+usermod -g "$gid" "$username"
+
+#Modification du Shell
+usermod -s "$shell" "$username"
+
+#Modification des groupes secondaires
+usermod -G "$groupes" "$username"
+    
+#Modification du répertoire personnel
+usermod -d "$homedir" -m "$username"
+
+echo "L'utilisateur $username a été modifié"
+id "$username"
+;;
+    
+3)
+#Confirmation de suppression
+read -p "Voulez-vous supprimer le répertoire personnel ? (o/n) : " supphome
+    
+case "$supphome" in
+    o)
+    userdel -r "$username"
     ;;
-    
-    2)
-    #Vérifier si l'utilisateur existe
-    id "$username" 2>/dev/null
-    if [ $? -ne 0 ]; then
-        echo "Erreur : l'utilisateur $username n'existe pas"
-        exit 1
-    fi
-    
-    #Lecture des nouvelles informations
-    read -p "Nouvel UID (laisser vide pour ne pas modifier) : " uid
-    read -p "Nouveau GID (laisser vide pour ne pas modifier) : " gid
-    read -p "Nouveau Shell (laisser vide pour ne pas modifier) : " shell
-    read -p "Nouveaux groupes secondaires (laisser vide pour ne pas modifier) : " groupes
-    read -p "Nouveau répertoire personnel (laisser vide pour ne pas modifier) : " homedir
-    
-    #Modification de l'UID
-    if [ -n "$uid" ]; then
-        usermod -u "$uid" "$username"
-    fi
-    
-    #Modification du GID
-    if [ -n "$gid" ]; then
-        usermod -g "$gid" "$username"
-    fi
-    
-    #Modification du Shell
-    if [ -n "$shell" ]; then
-        usermod -s "$shell" "$username"
-    fi
-    
-    #Modification des groupes secondaires
-    if [ -n "$groupes" ]; then
-        usermod -G "$groupes" "$username"
-    fi
-    
-    #Modification du répertoire personnel
-    if [ -n "$homedir" ]; then
-        usermod -d "$homedir" -m "$username"
-    fi
-    
-    echo "L'utilisateur $username a été modifié"
-    id "$username"
+    n)
+    userdel "$username"
     ;;
-    
-    3)
-    #Vérifier si l'utilisateur existe
-    id "$username" 2>/dev/null
-    if [ $? -ne 0 ]; then
-        echo "Erreur : l'utilisateur $username n'existe pas"
-        exit 1
-    fi
-    
-    #Confirmation de suppression
-    read -p "Voulez-vous supprimer le répertoire personnel ? (o/n) : " supphome
-    
-    case "$supphome" in
-        o)
-        userdel -r "$username"
-        ;;
-        n)
-        userdel "$username"
-        ;;
-        *)
-        echo "Choix invalide, annulation"
-        exit 1
-        ;;
-    esac
-    
-    if [ $? -eq 0 ]; then
-        echo "L'utilisateur $username a été supprimé"
-    else
-        echo "Erreur lors de la suppression de l'utilisateur"
-    fi
+    *)
+    echo "Choix invalide, annulation"
+    exit 1
+    ;;
+esac
+
+    echo "L'utilisateur $username a été supprimé"
     ;;
     
     *)
@@ -475,7 +452,7 @@ case "$choix" in
     ;;
 esac
 
-#Exercice 10 ------
+#---------- Exercice 10 ------
 
 #-----QUESTION 1 :
 echo "Fichiers contenant 'bash' dans le répertoire personnel"
@@ -552,17 +529,12 @@ ls -l /etc | grep '^-' | cut -c 1-10,17-24,26-32,59- | sort -k1,1 -k2,2 >> filtr
 echo "Résultat ajouté dans filtre_ls"
 echo -----
 
-#Exercice 10 ------
+#---------- Exercice 11 ------
 
 #Fonction 1 : Copie du fichier /etc/passwd vers /mypasswd
 copier_passwd() {
     cp /etc/passwd /mypasswd
-    if [ $? -eq 0 ]; then
-        echo "Le fichier /etc/passwd a été copié vers /mypasswd"
-    else
-        echo "Erreur lors de la copie du fichier"
-        exit 1
-    fi
+    echo "Le fichier /etc/passwd a été copié vers /mypasswd"
 }
 
 #Fonction 2 : Retourne le nombre de lignes du fichier mypasswd

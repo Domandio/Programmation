@@ -2,12 +2,7 @@
 #Fonction 1 : Copie du fichier /etc/passwd vers /mypasswd
 copier_passwd() {
     cp /etc/passwd /mypasswd
-    if [ $? -eq 0 ]; then
-        echo "Le fichier /etc/passwd a été copié vers /mypasswd"
-    else
-        echo "Erreur lors de la copie du fichier"
-        exit 1
-    fi
+    echo "Le fichier /etc/passwd a été copié vers /mypasswd"
 }
 
 #Fonction 2 : Retourne le nombre de lignes du fichier mypasswd
