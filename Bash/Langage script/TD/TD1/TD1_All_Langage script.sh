@@ -1,8 +1,6 @@
 #!/bin/bash
-
 #TD 1 Langage scripts - Matthieu LANDUZE
 #Adminsys 2025-2026
-
 #  _____ ___    _  _   _   _ 
 # |_   _|   \  | \| | /.\ / |
 #   | | | |) | | .` | \_/ | |
@@ -65,7 +63,6 @@ a=$(eval echo ~$USER)
 echo 'Vous avez 5 secondes pour entrer le chemin de votre répertoire home !'
 read -t 5 chemin
 error=$?
-
 
 #Vu sur "read --help" : si read timeout, renvoie un code d'erreur supérieur à 128
 if [ $error -gt 128 ]; then
