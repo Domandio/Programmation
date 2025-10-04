@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #On récupère le nombre total de fichiers puis on filtre ceux commençant par d ou -
-nbtotal=$(ls $1 | wc -l)
+nbtotal=$(ls -A $1 | wc -l)
 nbdossier=$(ls -l $1 | cut -c 1 | grep -c "d")
 nbfichiers=$(ls -l $1 | cut -c 1 | grep -c "-")
 #ls -A : Afficher tous les éléments sauf "." et ".." qui ne sont pas des fichiers ni des dossiers
