@@ -83,3 +83,15 @@ Get-ExecutionPolicy
 -Restricted / AllSigned / RemoteSigned / Unrestricted / Bypass / Undefined
 #Etendues :
 -Process / CurrentUser / LocalMachine
+
+#Voir les applis Windows installé sur le poste
+Get-AppxPackage | select -Name
+
+#Voir les applis Windows installable sur le poste
+Get-WindowsOptionalFeature -Online
+
+#Installer des applications spécifiques
+Get-AppxPackage -AllUsers *windowscalculator* | foreach {Add-AppPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+
+#Supprimer des applications spécifiques
+Get-AppxPackage *calcul* | Remove-AppPackage
